@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Canarisk | Coming Soon</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #000308; color: #fff; font-family: 'Arial Black', sans-serif; overflow: hidden; height: 100vh; width: 100vw;">
+
+    <svg style="position: absolute; width: 100%; height: 100%; z-index: 0;">
+        <rect width="100%" height="100%" fill="url(#spaceGrad)"/>
+        <defs>
+            <radialGradient id="spaceGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#050a15"/>
+                <stop offset="100%" stop-color="#000"/>
+            </radialGradient>
+        </defs>
+        <circle cx="15%" cy="20%" r="0.5" fill="white"><animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite" /></circle>
+        <circle cx="80%" cy="10%" r="1" fill="white"><animate attributeName="opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite" /></circle>
+        <circle cx="45%" cy="80%" r="0.7" fill="#ccf" opacity="0.8"/>
+        <circle cx="90%" cy="70%" r="0.4" fill="white"><animate attributeName="opacity" values="0.1;0.8;0.1" dur="2s" repeatCount="indefinite" /></circle>
+        <circle cx="10%" cy="85%" r="0.8" fill="white" opacity="0.5"/>
+        <circle cx="65%" cy="30%" r="1.2" fill="#ffc" opacity="0.8"/>
+    </svg>
+
+    <svg width="700" height="700" viewBox="0 0 100 100" style="position: absolute; top: -120px; left: -120px; z-index: 1;">
+        <defs>
+            <filter id="atmoGlow">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <radialGradient id="earthWater" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#1e90ff"/>
+                <stop offset="50%" stop-color="#0052a3"/>
+                <stop offset="100%" stop-color="#001a33"/>
+            </radialGradient>
+            <clipPath id="globeClip">
+                <circle cx="50" cy="50" r="45" />
+            </clipPath>
+        </defs>
+
+        <circle cx="50" cy="50" r="47" fill="#4fb3ff" opacity="0.2" filter="url(#atmoGlow)"/>
+
+        <circle cx="50" cy="50" r="45" fill="url(#earthWater)"/>
+
+        <g clip-path="url(#globeClip)">
+            <g fill="#1a472a" opacity="0.95">
+                <g id="landMass">
+                    <path d="M15 35 L18 30 L25 28 L30 32 L35 30 L32 45 L25 50 L20 45 Z" /> <path d="M25 55 L32 58 L35 65 L33 75 L28 85 L22 75 L23 60 Z" /> <path d="M55 25 L60 22 L70 20 L80 22 L85 28 L75 35 L65 38 L57 32 Z" /> <path d="M55 40 L65 38 L75 42 L77 55 L70 70 L60 75 L53 65 L52 50 Z" /> <path d="M115 35 L118 30 L125 28 L130 32 L135 30 L132 45 L125 50 L120 45 Z" />
+                    <path d="M125 55 L132 58 L135 65 L133 75 L128 85 L122 75 L123 60 Z" />
+                    <path d="M155 25 L160 22 L170 20 L180 22 L185 28 L175 35 L165 38 L157 32 Z" />
+                    <path d="M155 40 L165 38 L175 42 L177 55 L170 70 L160 75 L153 65 L152 50 Z" />
+                </g>
+                <animateTransform attributeName="transform" type="translate" from="0" to="-100" dur="60s" repeatCount="indefinite" />
+            </g>
+
+            <g opacity="0.3">
+                <g>
+                    <path d="M20 40 Q40 20 70 35 T90 50" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <path d="M15 60 Q45 75 80 55" stroke="white" stroke-width="5" fill="none" opacity="0.5"/>
+                    <path d="M120 40 Q140 20 170 35 T190 50" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <path d="M115 60 Q145 75 180 55" stroke="white" stroke-width="5" fill="none" opacity="0.5"/>
+                </g>
+                <animateTransform attributeName="transform" type="translate" from="0" to="-100" dur="35s" repeatCount="indefinite" />
+            </g>
+        </g>
+
+        <path d="M50 5 A45 45 0 0 1 50 95 A35 45 0 0 0 50 5" fill="black" opacity="0.7" />
+    </svg>
+
+    <div style="position: absolute; top: 50%; right: 5%; transform: translateY(-50%); text-align: right; z-index: 2; width: 45%;">
+        <div lang="en">
+            <h1 style="font-size: clamp(3em, 8vw, 6em); margin: 0; line-height: 0.85; text-shadow: 0 0 30px rgba(30, 144, 255, 0.5);">COMING<br>SOON</h1>
+            <p style="font-size: 1.2em; font-family: 'Segoe UI', sans-serif; color: #1e90ff; margin-top: 20px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">The orbit is active.</p>
+        </div>
+        
+        <div style="height: 2px; width: 80px; background: #fff; margin: 40px 0 40px auto; border-radius: 2px;"></div>
+
+        <div lang="fr">
+            <h1 style="font-size: clamp(2em, 6vw, 4em); margin: 0; line-height: 0.85; opacity: 0.9;">BIENTÔT<br>DISPONIBLE</h1>
+            <p style="font-size: 1.1em; font-family: 'Segoe UI', sans-serif; color: #1a472a; margin-top: 15px; font-weight: bold;">Rotation système en cours.</p>
+        </div>
+    </div>
+
+    <footer style="position: absolute; bottom: 30px; right: 5%; font-family: 'Courier New', Courier, monospace; font-size: 0.8em; color: #333;">
+        SYSTEM STATUS: ROTATING | MISSION 2026
+    </footer>
+
+</body>
+</html>
