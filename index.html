@@ -3,9 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>Canarisk | Coming Soon</title>
+    <style>
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes shootingStar {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(500px) translateX(-700px); opacity: 0; }
+        }
+        @keyframes flameFlicker {
+            0%, 100% { transform: scaleY(1); opacity: 0.9; }
+            50% { transform: scaleY(1.3); opacity: 1; }
+        }
+        /* Trajectoire aller-retour avec changement d'orientation et effet de surprise */
+        @keyframes flyAcross {
+            0% {
+                transform: translate(-150px, 120vh) rotate(25deg) scale(0.7);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            45% {
+                opacity: 1;
+            }
+            /* Disparition en haut à droite */
+            50% {
+                transform: translate(110vw, -20vh) rotate(25deg) scale(0.7);
+                opacity: 0;
+            }
+            /* Réapparition instantanée de l'autre côté, orientée différemment pour l'effet de surprise */
+            50.1% {
+                transform: translate(110vw, 30vh) rotate(-135deg) scale(0.8);
+                opacity: 0;
+            }
+            55% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-150px, 80vh) rotate(-135deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+        .star {
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        .shooting-star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, white, rgba(255,255,255,0));
+            animation: shootingStar 4s linear infinite;
+        }
+        .rocket-container {
+            position: absolute;
+            z-index: 3;
+            animation: flyAcross 54s linear infinite;
+        }
+        .rocket-flame {
+            animation: flameFlicker 0.15s ease-in-out infinite alternate;
+            transform-origin: 50% 70px;
+        }
+    </style>
 </head>
 <body style="margin: 0; padding: 0; background-color: #000308; color: #fff; font-family: 'Arial Black', sans-serif; overflow: hidden; height: 100vh; width: 100vw;">
 
+    <!-- Ciel étoilé & Étoiles filantes -->
     <svg style="position: absolute; width: 100%; height: 100%; z-index: 0;">
         <rect width="100%" height="100%" fill="url(#spaceGrad)"/>
         <defs>
@@ -14,14 +80,37 @@
                 <stop offset="100%" stop-color="#000"/>
             </radialGradient>
         </defs>
-        <circle cx="15%" cy="20%" r="0.5" fill="white"><animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite" /></circle>
-        <circle cx="80%" cy="10%" r="1" fill="white"><animate attributeName="opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite" /></circle>
-        <circle cx="45%" cy="80%" r="0.7" fill="#ccf" opacity="0.8"/>
-        <circle cx="90%" cy="70%" r="0.4" fill="white"><animate attributeName="opacity" values="0.1;0.8;0.1" dur="2s" repeatCount="indefinite" /></circle>
-        <circle cx="10%" cy="85%" r="0.8" fill="white" opacity="0.5"/>
-        <circle cx="65%" cy="30%" r="1.2" fill="#ffc" opacity="0.8"/>
+        <circle class="star" cx="15%" cy="20%" r="0.8" fill="white" style="animation-duration: 3s;" />
+        <circle class="star" cx="80%" cy="10%" r="1.2" fill="white" style="animation-duration: 4s;" />
+        <circle class="star" cx="45%" cy="80%" r="0.7" fill="#ccf" opacity="0.8" style="animation-duration: 2.5s;" />
+        <circle class="star" cx="90%" cy="70%" r="0.5" fill="white" style="animation-duration: 2s;" />
+        <circle class="star" cx="10%" cy="85%" r="0.8" fill="white" opacity="0.5" style="animation-duration: 5s;" />
+        <circle class="star" cx="65%" cy="30%" r="1.2" fill="#ffc" opacity="0.8" style="animation-duration: 3.5s;" />
+
+        <!-- Étoiles filantes -->
+        <line x1="75%" y1="5%" x2="55%" y2="25%" stroke="white" stroke-width="1.5" stroke-linecap="round" class="shooting-star" style="animation-duration: 5s; animation-delay: 1s;" />
+        <line x1="30%" y1="10%" x2="10%" y2="30%" stroke="white" stroke-width="1" stroke-linecap="round" class="shooting-star" style="animation-duration: 7s; animation-delay: 3s;" />
     </svg>
 
+    <!-- Fusée Animée lente avec changement d'orientation et effet de surprise -->
+    <div class="rocket-container">
+        <svg width="90" height="90" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Flamme du réacteur -->
+            <g class="rocket-flame">
+                <path d="M42 70 L50 98 L58 70 Z" fill="#FFC300" />
+                <path d="M45 70 L50 88 L55 70 Z" fill="#FF5733" />
+            </g>
+            <!-- Corps de la fusée -->
+            <path d="M50 15 C38 35 38 60 50 80 C62 60 62 35 50 15" fill="#f0f0f0" />
+            <path d="M50 15 L38 68 L50 62 L62 68 Z" fill="#FF3b30" />
+            <circle cx="50" cy="40" r="6" fill="#1e90ff" stroke="#fff" stroke-width="1.5" />
+            <!-- Ailerons -->
+            <path d="M38 68 L25 82 L44 73 Z" fill="#FFC300" />
+            <path d="M62 68 L75 82 L56 73 Z" fill="#FFC300" />
+        </svg>
+    </div>
+
+    <!-- Planète Terre -->
     <svg width="700" height="700" viewBox="0 0 100 100" style="position: absolute; top: -120px; left: -120px; z-index: 1;">
         <defs>
             <filter id="atmoGlow">
@@ -67,6 +156,7 @@
         <path d="M50 5 A45 45 0 0 1 50 95 A35 45 0 0 0 50 5" fill="black" opacity="0.7" />
     </svg>
 
+    <!-- Contenu texte -->
     <div style="position: absolute; top: 50%; right: 5%; transform: translateY(-50%); text-align: right; z-index: 2; width: 45%;">
         <div lang="en">
             <h1 style="font-size: clamp(3em, 8vw, 6em); margin: 0; line-height: 0.85; text-shadow: 0 0 30px rgba(30, 144, 255, 0.5);">COMING<br>SOON</h1>
@@ -81,6 +171,7 @@
         </div>
     </div>
 
+    <!-- Pied de page -->
     <footer style="position: absolute; bottom: 30px; right: 5%; font-family: 'Courier New', Courier, monospace; font-size: 0.8em; color: #333;">
         SYSTEM STATUS: ROTATING | MISSION 2026
     </footer>
