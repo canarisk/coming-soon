@@ -2,179 +2,433 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#030812">
+    <meta name="description" content="Canarisk — The orbit is active. Coming soon.">
     <title>Canarisk | Coming Soon</title>
     <style>
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+        :root {
+            color-scheme: dark;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #030812;
+            color: #f5f8ff;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            --blue: #53b8ff;
+            --muted: #9cabc0;
         }
-        @keyframes shootingStar {
-            0% { transform: translateY(0) translateX(0); opacity: 1; }
-            100% { transform: translateY(500px) translateX(-700px); opacity: 0; }
+
+        * {
+            box-sizing: border-box;
         }
-        @keyframes flameFlicker {
-            0%, 100% { transform: scaleY(1); opacity: 0.9; }
-            50% { transform: scaleY(1.3); opacity: 1; }
+
+        body {
+            width: 100%;
+            min-width: 320px;
+            height: 100vh;
+            height: 100svh;
+            margin: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(12, 38, 72, .42), transparent 55%),
+                #030812;
         }
-        /* Trajectoire aller-retour avec changement d'orientation et effet de surprise */
-        @keyframes flyAcross {
-            0% {
-                transform: translate(-150px, 120vh) rotate(25deg) scale(0.7);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            45% {
-                opacity: 1;
-            }
-            /* Disparition en haut à droite */
-            50% {
-                transform: translate(110vw, -20vh) rotate(25deg) scale(0.7);
-                opacity: 0;
-            }
-            /* Réapparition instantanée de l'autre côté, orientée différemment pour l'effet de surprise */
-            50.1% {
-                transform: translate(110vw, 30vh) rotate(-135deg) scale(0.8);
-                opacity: 0;
-            }
-            55% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-150px, 80vh) rotate(-135deg) scale(0.8);
-                opacity: 0;
-            }
+
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            isolation: isolate;
+            overflow: hidden;
         }
-        .star {
-            animation: twinkle 3s infinite ease-in-out;
-        }
-        .shooting-star {
+
+        .stars {
             position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, white, rgba(255,255,255,0));
-            animation: shootingStar 4s linear infinite;
+            inset: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
-        .rocket-container {
+
+        .star {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        .star:nth-of-type(3n) {
+            animation-delay: -1.7s;
+        }
+
+        .star:nth-of-type(4n) {
+            animation-delay: -2.9s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: .25; transform: scale(.8); }
+            50% { opacity: .95; transform: scale(1.15); }
+        }
+
+        .globe-wrap {
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        #globe {
+            width: 68%;
+            height: 100%;
+            pointer-events: auto;
+        }
+
+        .globe-wrap::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 61%;
+            width: 8%;
+            content: "";
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(3, 8, 18, .25));
+        }
+
+        .brand {
             position: absolute;
             z-index: 3;
-            animation: flyAcross 54s linear infinite;
+            top: clamp(24px, 5vh, 52px);
+            left: clamp(24px, 5vw, 72px);
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #eaf3ff;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .24em;
+            text-transform: uppercase;
         }
+
+        .brand-mark {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 16px rgba(83, 184, 255, .9);
+        }
+
+        .hero {
+            position: absolute;
+            z-index: 4;
+            top: 50%;
+            right: clamp(24px, 8vw, 132px);
+            width: min(42%, 560px);
+            padding: clamp(18px, 2.8vw, 34px);
+            border: 1px solid rgba(185, 218, 255, .09);
+            border-radius: 18px;
+            background: rgba(3, 8, 18, .16);
+            -webkit-backdrop-filter: blur(1px);
+            backdrop-filter: blur(1px);
+            transform: translateY(-50%);
+            text-align: right;
+            animation: arrive .8s ease-out both;
+        }
+
+        @keyframes arrive {
+            from { opacity: 0; transform: translate3d(0, calc(-50% + 12px), 0); }
+            to { opacity: 1; transform: translate3d(0, -50%, 0); }
+        }
+
+        .eyebrow {
+            margin: 0 0 22px;
+            color: var(--blue);
+            font-family: "Courier New", monospace;
+            font-size: .74rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.5rem, 5.2vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -.065em;
+            line-height: .94;
+            text-shadow: 0 0 48px rgba(43, 149, 255, .18);
+        }
+
+        .english-line {
+            display: block;
+        }
+
+        .teaser-copy {
+            margin: 16px 0 0;
+            color: #c1ccdc;
+            font-size: clamp(.9rem, 1.2vw, 1rem);
+            line-height: 1.6;
+        }
+
+        .divider {
+            width: 76px;
+            height: 1px;
+            margin: 25px 0 24px auto;
+            background: linear-gradient(90deg, transparent, rgba(195, 220, 255, .85));
+        }
+
+        .french-title {
+            margin: 0;
+            font-size: clamp(2.2rem, 4.5vw, 4.3rem);
+            letter-spacing: -.06em;
+            line-height: .96;
+        }
+
+        .rocket-orbit {
+            position: absolute;
+            z-index: 3;
+            top: 50%;
+            left: 31%;
+            width: min(56vw, 76vh);
+            aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            animation: orbit 48s linear infinite;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .rocket {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 64px;
+            height: 64px;
+            transform: translate(-50%, -50%) rotate(90deg) scale(.8);
+        }
+
+        .rocket svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            filter: drop-shadow(0 0 12px rgba(83, 184, 255, .36));
+        }
+
         .rocket-flame {
-            animation: flameFlicker 0.15s ease-in-out infinite alternate;
-            transform-origin: 50% 70px;
+            transform-box: fill-box;
+            transform-origin: center top;
+            animation: flame 180ms ease-in-out infinite alternate;
+        }
+
+        @keyframes flame {
+            from { transform: scaleY(.78); opacity: .82; }
+            to { transform: scaleY(1.18); opacity: 1; }
+        }
+
+        @keyframes orbit {
+            from { rotate: 0deg; }
+            to { rotate: 360deg; }
+        }
+
+        .status {
+            position: absolute;
+            z-index: 4;
+            right: clamp(24px, 5vw, 72px);
+            bottom: clamp(22px, 4vh, 42px);
+            margin: 0;
+            color: #7d8ba0;
+            font-family: "Courier New", monospace;
+            font-size: .7rem;
+            letter-spacing: .12em;
+            text-align: right;
+        }
+
+        @media (max-width: 700px) {
+            #globe {
+                width: 100%;
+                height: 100%;
+            }
+
+            .globe-wrap::after {
+                top: 70%;
+                right: 0;
+                bottom: auto;
+                left: 0;
+                width: 100%;
+                height: 14%;
+                background: linear-gradient(180deg, transparent, rgba(3, 8, 18, .35));
+            }
+
+            .brand {
+                top: 24px;
+                left: 24px;
+            }
+
+            .hero {
+                top: auto;
+                right: 24px;
+                bottom: 12%;
+                width: calc(100% - 48px);
+                padding: 18px;
+                transform: none;
+            }
+
+            @keyframes arrive {
+                from { opacity: 0; transform: translateY(12px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .eyebrow {
+                margin-bottom: 14px;
+                font-size: .65rem;
+            }
+
+            h1 {
+                font-size: clamp(2.6rem, 11vw, 4.5rem);
+            }
+
+            .divider {
+                margin: 19px 0 18px auto;
+            }
+
+            .french-title {
+                font-size: clamp(2.3rem, 9.5vw, 3.8rem);
+            }
+
+            .rocket-orbit {
+                top: 36%;
+                left: 50%;
+                width: min(82vw, 48vh);
+            }
+
+            .rocket {
+                width: 48px;
+                height: 48px;
+            }
+
+            .status {
+                right: 24px;
+                bottom: 22px;
+                font-size: .62rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
 </head>
-<body style="margin: 0; padding: 0; background-color: #000308; color: #fff; font-family: 'Arial Black', sans-serif; overflow: hidden; height: 100vh; width: 100vw;">
-
-    <!-- Ciel étoilé & Étoiles filantes -->
-    <svg style="position: absolute; width: 100%; height: 100%; z-index: 0;">
-        <rect width="100%" height="100%" fill="url(#spaceGrad)"/>
-        <defs>
-            <radialGradient id="spaceGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#050a15"/>
-                <stop offset="100%" stop-color="#000"/>
-            </radialGradient>
-        </defs>
-        <circle class="star" cx="15%" cy="20%" r="0.8" fill="white" style="animation-duration: 3s;" />
-        <circle class="star" cx="80%" cy="10%" r="1.2" fill="white" style="animation-duration: 4s;" />
-        <circle class="star" cx="45%" cy="80%" r="0.7" fill="#ccf" opacity="0.8" style="animation-duration: 2.5s;" />
-        <circle class="star" cx="90%" cy="70%" r="0.5" fill="white" style="animation-duration: 2s;" />
-        <circle class="star" cx="10%" cy="85%" r="0.8" fill="white" opacity="0.5" style="animation-duration: 5s;" />
-        <circle class="star" cx="65%" cy="30%" r="1.2" fill="#ffc" opacity="0.8" style="animation-duration: 3.5s;" />
-
-        <!-- Étoiles filantes -->
-        <line x1="75%" y1="5%" x2="55%" y2="25%" stroke="white" stroke-width="1.5" stroke-linecap="round" class="shooting-star" style="animation-duration: 5s; animation-delay: 1s;" />
-        <line x1="30%" y1="10%" x2="10%" y2="30%" stroke="white" stroke-width="1" stroke-linecap="round" class="shooting-star" style="animation-duration: 7s; animation-delay: 3s;" />
-    </svg>
-
-    <!-- Fusée Animée lente avec changement d'orientation et effet de surprise -->
-    <div class="rocket-container">
-        <svg width="90" height="90" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- Flamme du réacteur -->
-            <g class="rocket-flame">
-                <path d="M42 70 L50 98 L58 70 Z" fill="#FFC300" />
-                <path d="M45 70 L50 88 L55 70 Z" fill="#FF5733" />
-            </g>
-            <!-- Corps de la fusée -->
-            <path d="M50 15 C38 35 38 60 50 80 C62 60 62 35 50 15" fill="#f0f0f0" />
-            <path d="M50 15 L38 68 L50 62 L62 68 Z" fill="#FF3b30" />
-            <circle cx="50" cy="40" r="6" fill="#1e90ff" stroke="#fff" stroke-width="1.5" />
-            <!-- Ailerons -->
-            <path d="M38 68 L25 82 L44 73 Z" fill="#FFC300" />
-            <path d="M62 68 L75 82 L56 73 Z" fill="#FFC300" />
+<body>
+    <main class="scene">
+        <svg class="stars" aria-hidden="true">
+            <circle class="star" cx="12%" cy="20%" r="1" fill="#fff"/>
+            <circle class="star" cx="22%" cy="72%" r="1.2" fill="#b9d8ff"/>
+            <circle class="star" cx="42%" cy="13%" r=".8" fill="#fff"/>
+            <circle class="star" cx="57%" cy="78%" r="1" fill="#fff"/>
+            <circle class="star" cx="73%" cy="16%" r="1.2" fill="#d3e6ff"/>
+            <circle class="star" cx="88%" cy="64%" r=".8" fill="#fff"/>
+            <circle class="star" cx="94%" cy="28%" r="1" fill="#fff"/>
+            <circle class="star" cx="8%" cy="48%" r=".7" fill="#b9d8ff"/>
+            <circle class="star" cx="64%" cy="43%" r=".8" fill="#fff"/>
         </svg>
-    </div>
 
-    <!-- Planète Terre -->
-    <svg width="700" height="700" viewBox="0 0 100 100" style="position: absolute; top: -120px; left: -120px; z-index: 1;">
-        <defs>
-            <filter id="atmoGlow">
-                <feGaussianBlur stdDeviation="1.5" result="blur"/>
-                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-            </filter>
-            <radialGradient id="earthWater" cx="30%" cy="30%" r="70%">
-                <stop offset="0%" stop-color="#1e90ff"/>
-                <stop offset="50%" stop-color="#0052a3"/>
-                <stop offset="100%" stop-color="#001a33"/>
-            </radialGradient>
-            <clipPath id="globeClip">
-                <circle cx="50" cy="50" r="45" />
-            </clipPath>
-        </defs>
-
-        <circle cx="50" cy="50" r="47" fill="#4fb3ff" opacity="0.2" filter="url(#atmoGlow)"/>
-
-        <circle cx="50" cy="50" r="45" fill="url(#earthWater)"/>
-
-        <g clip-path="url(#globeClip)">
-            <g fill="#1a472a" opacity="0.95">
-                <g id="landMass">
-                    <path d="M15 35 L18 30 L25 28 L30 32 L35 30 L32 45 L25 50 L20 45 Z" /> <path d="M25 55 L32 58 L35 65 L33 75 L28 85 L22 75 L23 60 Z" /> <path d="M55 25 L60 22 L70 20 L80 22 L85 28 L75 35 L65 38 L57 32 Z" /> <path d="M55 40 L65 38 L75 42 L77 55 L70 70 L60 75 L53 65 L52 50 Z" /> <path d="M115 35 L118 30 L125 28 L130 32 L135 30 L132 45 L125 50 L120 45 Z" />
-                    <path d="M125 55 L132 58 L135 65 L133 75 L128 85 L122 75 L123 60 Z" />
-                    <path d="M155 25 L160 22 L170 20 L180 22 L185 28 L175 35 L165 38 L157 32 Z" />
-                    <path d="M155 40 L165 38 L175 42 L177 55 L170 70 L160 75 L153 65 L152 50 Z" />
-                </g>
-                <animateTransform attributeName="transform" type="translate" from="0" to="-100" dur="60s" repeatCount="indefinite" />
-            </g>
-
-            <g opacity="0.3">
-                <g>
-                    <path d="M20 40 Q40 20 70 35 T90 50" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
-                    <path d="M15 60 Q45 75 80 55" stroke="white" stroke-width="5" fill="none" opacity="0.5"/>
-                    <path d="M120 40 Q140 20 170 35 T190 50" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
-                    <path d="M115 60 Q145 75 180 55" stroke="white" stroke-width="5" fill="none" opacity="0.5"/>
-                </g>
-                <animateTransform attributeName="transform" type="translate" from="0" to="-100" dur="35s" repeatCount="indefinite" />
-            </g>
-        </g>
-
-        <path d="M50 5 A45 45 0 0 1 50 95 A35 45 0 0 0 50 5" fill="black" opacity="0.7" />
-    </svg>
-
-    <!-- Contenu texte -->
-    <div style="position: absolute; top: 50%; right: 5%; transform: translateY(-50%); text-align: right; z-index: 2; width: 45%;">
-        <div lang="en">
-            <h1 style="font-size: clamp(3em, 8vw, 6em); margin: 0; line-height: 0.85; text-shadow: 0 0 30px rgba(30, 144, 255, 0.5);">COMING<br>SOON</h1>
-            <p style="font-size: 1.2em; font-family: 'Segoe UI', sans-serif; color: #1e90ff; margin-top: 20px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">The orbit is active.</p>
+        <div class="globe-wrap" aria-label="Globe terrestre animé avec couche de nuages">
+            <div id="globe"></div>
         </div>
-        
-        <div style="height: 2px; width: 80px; background: #fff; margin: 40px 0 40px auto; border-radius: 2px;"></div>
 
-        <div lang="fr">
-            <h1 style="font-size: clamp(2em, 6vw, 4em); margin: 0; line-height: 0.85; opacity: 0.9;">BIENTÔT<br>DISPONIBLE</h1>
-            <p style="font-size: 1.1em; font-family: 'Segoe UI', sans-serif; color: #1a472a; margin-top: 15px; font-weight: bold;">Rotation système en cours.</p>
+        <div class="brand"><span class="brand-mark"></span>Canarisk</div>
+
+        <div class="rocket-orbit" aria-hidden="true">
+            <div class="rocket">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g class="rocket-flame">
+                        <path d="M42 67 50 96 58 67Z" fill="#ffc247"/>
+                        <path d="m46 68 4 19 4-19Z" fill="#ff684f"/>
+                    </g>
+                    <path d="M50 12c-14 17-17 42-9 61l9 8 9-8c8-19 5-44-9-61Z" fill="#f3f7ff"/>
+                    <path d="m50 12-9 47 9-5 9 5-9-47Z" fill="#ff5964"/>
+                    <circle cx="50" cy="42" r="6" fill="#48bfff" stroke="#fff" stroke-width="2"/>
+                    <path d="m41 65-15 17 20-8m13-9 15 17-20-8" fill="#ffc247"/>
+                </svg>
+            </div>
         </div>
-    </div>
 
-    <!-- Pied de page -->
-    <footer style="position: absolute; bottom: 30px; right: 5%; font-family: 'Courier New', Courier, monospace; font-size: 0.8em; color: #333;">
-        SYSTEM STATUS: ROTATING | MISSION 2026
-    </footer>
+        <section class="hero" aria-label="Canarisk bientôt disponible">
+            <p class="eyebrow">Canarisk · Coming soon</p>
+            <div lang="en">
+                <h1>A new world is taking shape.</h1>
+                <p class="teaser-copy">And you haven’t finished being surprised. Soon, a new way to anticipate the unpredictable.</p>
+            </div>
+            <div class="divider" aria-hidden="true"></div>
+            <div lang="fr">
+                <h2 class="french-title">Un nouveau monde se dessine.</h2>
+                <p class="teaser-copy">Et vous n’avez pas fini d’être surpris. Bientôt, une autre façon d’anticiper l’imprévisible.</p>
+            </div>
+        </section>
 
+        <p class="status">SYSTEM STATUS: ROTATING <span aria-hidden="true">|</span> MISSION 2026</p>
+    </main>
+
+    <script type="module">
+        import * as THREE from "https://esm.sh/three";
+
+        const globeElement = document.getElementById("globe");
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const isMobile = window.matchMedia("(max-width: 700px)").matches;
+        const world = new Globe(globeElement, { animateIn: true })
+            .globeImageUrl("https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg")
+            .bumpImageUrl("https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png")
+            .backgroundColor("rgba(0, 0, 0, 0)")
+            .showAtmosphere(true)
+            .atmosphereColor("#54baff")
+            .atmosphereAltitude(0.16);
+
+        world.controls().autoRotate = !reducedMotion;
+        world.controls().autoRotateSpeed = 0.32;
+        world.controls().enableZoom = false;
+        world.controls().enablePan = false;
+        world.pointOfView({ lat: 46.6, lng: 2.5, altitude: isMobile ? 1.55 : 1.8 }, 0);
+
+        const resizeGlobe = () => {
+            world
+                .width(globeElement.clientWidth)
+                .height(globeElement.clientHeight);
+        };
+        new ResizeObserver(resizeGlobe).observe(globeElement);
+        resizeGlobe();
+
+        new THREE.TextureLoader().load(
+            "https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/clouds/clouds.png",
+            (cloudTexture) => {
+                const clouds = new THREE.Mesh(
+                    new THREE.SphereGeometry(world.getGlobeRadius() * 1.006, 64, 64),
+                    new THREE.MeshPhongMaterial({
+                        map: cloudTexture,
+                        transparent: true,
+                        opacity: 0.42,
+                        depthWrite: false
+                    })
+                );
+                world.scene().add(clouds);
+
+                if (!reducedMotion) {
+                    const rotateClouds = () => {
+                        clouds.rotation.y -= 0.00009;
+                        requestAnimationFrame(rotateClouds);
+                    };
+                    rotateClouds();
+                }
+            },
+            undefined,
+            (error) => console.error("Could not load the globe cloud texture.", error)
+        );
+    </script>
 </body>
 </html>
